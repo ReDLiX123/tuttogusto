@@ -5,6 +5,7 @@ import { HeroSlider } from '@/presentation/components/home/HeroSlider';
 import { RecommendedCarousel } from '@/presentation/components/home/RecommendedCarousel';
 import { productService, newsService } from '@/application/container';
 import { STATIC_PRODUCTS, STATIC_NEWS } from '@/domain/staticData';
+import { getImageUrl } from '@/presentation/utils/imageUtils';
 import { Flame, Clock, ShieldCheck, Heart } from 'lucide-react';
 
 export default async function HomePage() {
@@ -97,7 +98,7 @@ export default async function HomePage() {
               >
                 <div className="relative h-44 w-full bg-stone-900 overflow-hidden">
                   <Image
-                    src={news.image}
+                    src={getImageUrl(news.image)}
                     alt={news.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -152,7 +153,7 @@ export default async function HomePage() {
         </div>
         <div className="relative w-full md:w-80 h-52 rounded-2xl overflow-hidden border-2 border-[#D4A373]/30 shrink-0">
           <Image
-            src="/assets/menu/pic-1.jpg"
+            src={getImageUrl('/assets/menu/pic-1.jpg')}
             alt="Атмосфера Туттогусто"
             fill
             className="object-cover"

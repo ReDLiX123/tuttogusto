@@ -8,6 +8,8 @@ import { ShoppingBag, Menu, X, PhoneCall } from 'lucide-react';
 import { useCart } from '@/presentation/context/CartContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
+import { getImageUrl } from '@/presentation/utils/imageUtils';
+
 export const Navbar: React.FC = () => {
   const pathname = usePathname();
   const { cart, setIsDrawerOpen } = useCart();
@@ -27,7 +29,7 @@ export const Navbar: React.FC = () => {
         {/* Full Image Logo */}
         <Link href="/" className="inline-block relative h-14 w-52 sm:w-60">
           <Image
-            src="/assets/final_logo.png"
+            src={getImageUrl('/assets/final_logo.png')}
             alt="Туттогусто Иркутск"
             fill
             className="object-contain object-left"

@@ -3,6 +3,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { MapPin, Clock, Phone, Send, Globe } from 'lucide-react';
 
+import { getImageUrl } from '@/presentation/utils/imageUtils';
+
 export const Footer: React.FC = () => {
   return (
     <footer className="bg-[#1A1715] border-t border-stone-800 text-stone-400 pt-16 pb-12 mt-20">
@@ -11,7 +13,7 @@ export const Footer: React.FC = () => {
           {/* Brand Col */}
           <div className="space-y-4">
             <Link href="/" className="inline-block relative h-14 w-52">
-              <Image src="/assets/final_logo.png" alt="Туттогусто" fill className="object-contain object-left" />
+              <Image src={getImageUrl('/assets/final_logo.png')} alt="Туттогусто" fill className="object-contain object-left" />
             </Link>
             <p className="text-sm text-stone-400 leading-relaxed">
               Атмосферная кофейня в м-н Хрустальный парк. Готовим авторский кофе, свежую выпечку и блюда от шеф-повара с любовью.

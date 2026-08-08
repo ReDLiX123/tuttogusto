@@ -7,6 +7,8 @@ import { X, Plus, Minus, ShoppingBag, Clock, Weight, Check } from 'lucide-react'
 import { Product } from '@/domain/entities/Product';
 import { useCart } from '@/presentation/context/CartContext';
 
+import { getImageUrl } from '@/presentation/utils/imageUtils';
+
 interface ProductModalProps {
   product: Product;
   isOpen: boolean;
@@ -59,7 +61,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onC
           {/* Image col */}
           <div className="relative aspect-square md:aspect-auto w-full bg-stone-950">
             <Image
-              src={product.image}
+              src={getImageUrl(product.image)}
               alt={product.title}
               fill
               className="object-cover"

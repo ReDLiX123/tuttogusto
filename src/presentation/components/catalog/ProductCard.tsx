@@ -9,6 +9,8 @@ import { ProductFactory } from '@/domain/entities/ProductFactory';
 import { useCart } from '@/presentation/context/CartContext';
 import { ProductModal } from './ProductModal';
 
+import { getImageUrl } from '@/presentation/utils/imageUtils';
+
 interface ProductCardProps {
   product: Product | ProductProps;
   onClickOverride?: () => void;
@@ -57,7 +59,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product: rawProduct, o
         {/* Image Container */}
         <div className="relative aspect-[4/3] w-full overflow-hidden bg-stone-900 shrink-0">
           <Image
-            src={product.image}
+            src={getImageUrl(product.image)}
             alt={product.title}
             fill
             className="object-cover group-hover:scale-108 transition-transform duration-500"
