@@ -1,0 +1,70 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Category {
+  id        String    @id @default(uuid())
+  slug      String    @unique
+  name      String
+  sortOrder Int       @default(0)
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Product {
+  id           String      @id @default(uuid())
+  title        String
+  description  String
+  price        Float
+  image        String
+  type         String      // 'DISH' | 'DRINK' | 'BAKERY'
+  weightVolume String?     // e.g. "350g", "400ml", "1 шт"
+  prepTime     Int?        // minutes
+  discount     Float?      @default(0)
+  isAvailable  Boolean     @default(true)
+  isFeatured   Boolean     @default(false)
+  categoryId   String
+  category     Category    @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  orderItems   OrderItem[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
+model Order {
+  id           String      @id @default(uuid())
+  customerName String
+  phone        String
+  address      String?
+  comments     String?
+  status       String      @default("NEW") // "NEW" | "PROCESSING" | "COMPLETED" | "CANCELLED"
+  totalAmount  Float
+  items        OrderItem[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
+model OrderItem {
+  id        String   @id @default(uuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity  Int
+  price     Float
+}
+
+model News {
+  id          String   @id @default(uuid())
+  title       String
+  content     String
+  image       String
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
