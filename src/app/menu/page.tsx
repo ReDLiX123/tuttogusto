@@ -29,16 +29,34 @@ export default function MenuPage() {
           fetch('/api/products').catch(() => null),
         ]);
 
-        if (catRes && prodRes && catRes.ok && prodRes.ok) {
+        let loadedCategories: Category[] = [];
+        let loadedProducts: Product[] = [];
+
+        if (catRes && catRes.ok) {
           const catData = await catRes.json();
-          const prodData = await prodRes.json();
-          setCategories(catData.map((c: any) => new Category(c)));
-          setProducts(prodData.map((p: any) => ProductFactory.create(p)));
-        } else {
-          // Static export fallback for GitHub Pages
-          setCategories(STATIC_CATEGORIES.map((c: any) => new Category(c)));
-          setProducts(STATIC_PRODUCTS.map((p: any) => ProductFactory.create(p)));
+          if (Array.isArray(catData) && catData.length > 0) {
+            loadedCategories = catData.map((c: any) => new Category(c));
+          }
         }
+
+        if (prodRes && prodRes.ok) {
+          const prodData = await prodRes.json();
+          if (Array.isArray(prodData) && prodData.length > 0) {
+            loadedProducts = prodData.map((p: any) => ProductFactory.create(p));
+          }
+        }
+
+        // Fallback to static dataset if empty
+        if (loadedCategories.length === 0) {
+          loadedCategories = STATIC_CATEGORIES.map((c: any) => new Category(c));
+        }
+
+        if (loadedProducts.length === 0) {
+          loadedProducts = STATIC_PRODUCTS.map((p: any) => ProductFactory.create(p));
+        }
+
+        setCategories(loadedCategories);
+        setProducts(loadedProducts);
       } catch (err) {
         setCategories(STATIC_CATEGORIES.map((c: any) => new Category(c)));
         setProducts(STATIC_PRODUCTS.map((p: any) => ProductFactory.create(p)));

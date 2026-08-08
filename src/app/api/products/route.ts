@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { productService } from '@/application/container';
+import { STATIC_PRODUCTS } from '@/domain/staticData';
 
 export const dynamic = 'force-static';
 
@@ -10,15 +11,40 @@ export async function GET(request: Request) {
     const query = searchParams.get('query');
     const featured = searchParams.get('featured');
 
-    let products;
-    if (featured === 'true') {
-      products = await productService.getFeaturedProducts();
-    } else if (categoryId && categoryId !== 'all') {
-      products = await productService.getProductsByCategory(categoryId);
-    } else if (query) {
-      products = await productService.searchProducts(query);
-    } else {
-      products = await productService.getAllProducts();
+    let products: any[] = [];
+    try {
+      if (featured === 'true') {
+        products = await productService.getFeaturedProducts();
+      } else if (categoryId && categoryId !== 'all') {
+        products = await productService.getProductsByCategory(categoryId);
+      } else if (query) {
+        products = await productService.searchProducts(query);
+      } else {
+        products = await productService.getAllProducts();
+      }
+    } catch (e) {
+      products = [];
+    }
+
+    if (!products || products.length === 0) {
+      let filtered = STATIC_PRODUCTS;
+      if (featured === 'true') {
+        filtered = STATIC_PRODUCTS.filter((p) => p.isFeatured);
+      } else if (categoryId && categoryId !== 'all') {
+        filtered = STATIC_PRODUCTS.filter((p) => p.categoryId === categoryId);
+      } else if (query) {
+        const q = query.toLowerCase();
+        filtered = STATIC_PRODUCTS.filter(
+          (p) => p.title.toLowerCase().includes(q) || p.description.toLowerCase().includes(q)
+        );
+      }
+      return NextResponse.json(
+        filtered.map((p) => ({
+          ...p,
+          finalPrice: p.price,
+          badge: p.type === 'DISH' ? (p.prepTime ? `Готовка ~${p.prepTime} мин` : 'Свежее') : (p.weightVolume || 'Порция'),
+        }))
+      );
     }
 
     const jsonProducts = products.map((p) => ({
@@ -40,6 +66,6 @@ export async function GET(request: Request) {
 
     return NextResponse.json(jsonProducts);
   } catch (error: any) {
-    return NextResponse.json([]);
+    return NextResponse.json(STATIC_PRODUCTS);
   }
 }
