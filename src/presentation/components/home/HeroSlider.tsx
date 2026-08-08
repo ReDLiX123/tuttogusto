@@ -6,13 +6,15 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, ChevronLeft, ChevronRight, Star } from 'lucide-react';
 
+const BASE_PATH = process.env.NODE_ENV === 'production' ? '/tuttogusto' : '';
+
 const SLIDES = [
   {
     id: 1,
     title: 'Атмосфера вкуса & Авторский кофе',
     subtitle: 'Кофейня премиум-класса «Туттогусто» • Хрустальный парк',
     description: 'Готовим из свежеобжаренных зерен спешелти сегмента и подаем изысканные блюда шеф-повара прямо из печи.',
-    image: '/assets/menu/slider/slide-2.jpg',
+    image: `${BASE_PATH}/assets/menu/slider/slide-2.jpg`,
     ctaText: 'Перейти в меню',
     ctaLink: '/menu',
   },
@@ -21,16 +23,16 @@ const SLIDES = [
     title: 'Завтраки & Свежая выпечка каждый день',
     subtitle: 'Ручная работа наших кондитеров с 07:15',
     description: 'Хрустящие миндальные круассаны, баскские чизкейки и бриоши с лососем и яйцами пашот.',
-    image: '/assets/menu/slider/slide-3.jpg',
+    image: `${BASE_PATH}/assets/menu/slider/slide-3.jpg`,
     ctaText: 'Выбрать выпечку',
     ctaLink: '/menu?category=bakery',
   },
   {
     id: 3,
     title: 'Быстрая доставка по Иркутску',
-    subtitle: 'Горячее блюдо у вашей двери за 30-45 минут',
-    description: 'Бесплатная доставка при заказе от 1500 рублей. Бережно упакуем согревающие напитки и свежую еду.',
-    image: '/assets/menu/slider/slide-4.jpg',
+    subtitle: 'Привезём горячим за 30-45 минут',
+    description: 'Собственная служба доставки аккуратно привезет ваши любимые блюда и напитки по Иркутску.',
+    image: `${BASE_PATH}/assets/menu/slider/slide-4.jpg`,
     ctaText: 'Оформить заказ',
     ctaLink: '/menu',
   },
