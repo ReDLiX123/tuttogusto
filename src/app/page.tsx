@@ -7,8 +7,6 @@ import { productService, newsService } from '@/application/container';
 import { STATIC_PRODUCTS, STATIC_NEWS } from '@/domain/staticData';
 import { Flame, Clock, ShieldCheck, Heart } from 'lucide-react';
 
-export const revalidate = 0; // Dynamic server fetching
-
 export default async function HomePage() {
   let featuredProducts: any[] = [];
   let newsList: any[] = [];
