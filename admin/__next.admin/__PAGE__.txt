@@ -1,0 +1,23 @@
+1:"$Sreact.fragment"
+2:I[47257,["/_next/static/chunks/0h2qsuyze9ds1.js","/_next/static/chunks/3soi89ef1wasm.js","/_next/static/chunks/1_4ydcqqdn9tj.js","/_next/static/chunks/1u-tx5_h5fbv7.js"],"ClientPageRoot"]
+3:I[72906,["/_next/static/chunks/0h2qsuyze9ds1.js","/_next/static/chunks/3soi89ef1wasm.js","/_next/static/chunks/1_4ydcqqdn9tj.js","/_next/static/chunks/1u-tx5_h5fbv7.js","/_next/static/chunks/1_qtq_b4bhqxg.js","/_next/static/chunks/10x9b7qj-2lvy.js"],"default"]
+6:I[97367,["/_next/static/chunks/0h2qsuyze9ds1.js","/_next/static/chunks/3soi89ef1wasm.js","/_next/static/chunks/1_4ydcqqdn9tj.js","/_next/static/chunks/1u-tx5_h5fbv7.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+b:I[97367,["/_next/static/chunks/0h2qsuyze9ds1.js","/_next/static/chunks/3soi89ef1wasm.js","/_next/static/chunks/1_4ydcqqdn9tj.js","/_next/static/chunks/1u-tx5_h5fbv7.js"],"ViewportBoundary"]
+c:I[97367,["/_next/static/chunks/0h2qsuyze9ds1.js","/_next/static/chunks/3soi89ef1wasm.js","/_next/static/chunks/1_4ydcqqdn9tj.js","/_next/static/chunks/1u-tx5_h5fbv7.js"],"MetadataBoundary"]
+d:I[27201,["/_next/static/chunks/0h2qsuyze9ds1.js","/_next/static/chunks/3soi89ef1wasm.js","/_next/static/chunks/1_4ydcqqdn9tj.js","/_next/static/chunks/1u-tx5_h5fbv7.js"],"IconMark"]
+f:I[42101,["/_next/static/chunks/0h2qsuyze9ds1.js","/_next/static/chunks/3soi89ef1wasm.js","/_next/static/chunks/1_4ydcqqdn9tj.js","/_next/static/chunks/1u-tx5_h5fbv7.js","/_next/static/chunks/1_qtq_b4bhqxg.js"],"AdminAuthGuard"]
+10:I[39756,["/_next/static/chunks/0h2qsuyze9ds1.js","/_next/static/chunks/3soi89ef1wasm.js","/_next/static/chunks/1_4ydcqqdn9tj.js","/_next/static/chunks/1u-tx5_h5fbv7.js"],"default"]
+11:I[37457,["/_next/static/chunks/0h2qsuyze9ds1.js","/_next/static/chunks/3soi89ef1wasm.js","/_next/static/chunks/1_4ydcqqdn9tj.js","/_next/static/chunks/1u-tx5_h5fbv7.js"],"default"]
+a:X
+0:{"buildId":"Txqq-EHoKi1nOprUzrQbU","data":[{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/_next/static/chunks/10x9b7qj-2lvy.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"isPartial":"$@9","staleTime":"$a","varyParams":null},{"rsc":["$","$1","h",{"children":[null,["$","$Lb",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","div",null,{"hidden":true,"children":["$","$Lc",null,{"children":["$","$7",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Панель Администратора | Туттогусто"}],["$","meta","1",{"name":"description","content":"Доставка и самовывоз вкуснейших блюд, свежей выпечки и спешелти кофе в Иркутске от кофейни Tuttogusto. Быстрая доставка от 30 минут."}],["$","meta","2",{"name":"keywords","content":"кофейня Иркутск,доставка кофе,Туттогусто,выпечка Иркутск,завтраки Иркутск"}],["$","link","3",{"rel":"icon","href":"/favicon.ico?favicon.2vob68tjqpejf.ico","sizes":"256x256","type":"image/x-icon"}],["$","$Ld","4",{}]]}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"isPartial":"$@e","staleTime":"$a","varyParams":null},{"rsc":["$","$1","c",{"children":[[["$","script","script-0",{"src":"/_next/static/chunks/1_qtq_b4bhqxg.js","async":true}]],["$","$Lf",null,{"children":["$","$L10",null,{"parallelRouterKey":"children","template":["$","$L11",null,{}]}]}]]}],"isPartial":"$@12","staleTime":"$a","varyParams":null}],"isUpgradeableISRFallback":false,"a":"$@13","rootVaryParams":null,"needsRuntimeRequest":"$@14"}
+4:{}
+5:"$0:data:0:rsc:props:children:0:props:serverProvidedParams:params"
+8:null
+14:true
+a:300
+a:C
+13:0
+e:"$undefined"
+12:"$undefined"
+9:"$undefined"
