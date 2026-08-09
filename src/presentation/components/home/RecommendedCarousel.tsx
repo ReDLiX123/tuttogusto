@@ -20,11 +20,10 @@ export const RecommendedCarousel: React.FC<RecommendedCarouselProps> = ({ produc
   const isDragging = useRef(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  // 1 original set + 1 duplicate repeat copy for seamless infinite looping without DOM clutter
-  const REPEAT_COUNT = 2;
+  // Single pass render (0 duplicate copies) to keep DOM minimal and SEO 100% clean
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // MotionValue for unified, smooth Framer Motion dragging & animations on desktop
+  // MotionValue for smooth Framer Motion dragging & animations on desktop
   const x = useMotionValue(0);
 
   // Detect mobile viewport
@@ -50,19 +49,6 @@ export const RecommendedCarousel: React.FC<RecommendedCarouselProps> = ({ produc
   // Reconstruct domain entities for detail modal
   const domainProducts = useMemo(() => {
     return products.map((p) => ProductFactory.create(p));
-  }, [products]);
-
-  // Compact virtual items array (1 original + 1 duplicate with aria-hidden)
-  const virtualProducts = useMemo(() => {
-    if (products.length === 0) return [];
-    const list: { item: ProductProps; key: string; isDuplicate: boolean }[] = [];
-    for (let r = 0; r < REPEAT_COUNT; r++) {
-      const isDuplicate = r > 0;
-      products.forEach((p, idx) => {
-        list.push({ item: p, key: `${p.id}-v${r}-${idx}`, isDuplicate });
-      });
-    }
-    return list;
   }, [products]);
 
   // Modulo step navigation handlers
@@ -148,8 +134,7 @@ export const RecommendedCarousel: React.FC<RecommendedCarouselProps> = ({ produc
       </div>
 
       {/* 
-        Mobile View: Render ONLY original products in touch snap container
-        Desktop View: Render 1 original + 1 duplicate (aria-hidden) set for smooth loop
+        Single pass render across mobile and desktop: each product appears EXACTLY ONCE.
       */}
       {isMobile ? (
         <div
@@ -179,7 +164,7 @@ export const RecommendedCarousel: React.FC<RecommendedCarouselProps> = ({ produc
           <motion.div
             style={{ x }}
             drag="x"
-            dragConstraints={{ left: -((virtualProducts.length - 3) * 308), right: 0 }}
+            dragConstraints={{ left: -Math.max(0, (products.length - 3) * 308), right: 0 }}
             dragElastic={0.05}
             onDragStart={() => {
               isDragging.current = true;
@@ -202,15 +187,14 @@ export const RecommendedCarousel: React.FC<RecommendedCarouselProps> = ({ produc
             }}
             className="flex gap-6 cursor-grab active:cursor-grabbing"
           >
-            {virtualProducts.map((vProduct) => (
+            {products.map((product) => (
               <div
-                key={vProduct.key}
+                key={product.id}
                 className="w-[280px] sm:w-[300px] shrink-0 select-none"
-                aria-hidden={vProduct.isDuplicate ? 'true' : undefined}
               >
                 <ProductCard
-                  product={vProduct.item}
-                  onClickOverride={() => handleCardClick(vProduct.item)}
+                  product={product}
+                  onClickOverride={() => handleCardClick(product)}
                 />
               </div>
             ))}
