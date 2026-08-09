@@ -50,6 +50,11 @@ export const metadata: Metadata = {
     description: 'Спешелти кофе, горячие блюда и свежие круассаны в Иркутске.',
     images: ['/assets/menu/slider/slide-2.jpg'],
   },
+  icons: {
+    icon: '/assets/cropped-favicon-150x150.png',
+    shortcut: '/assets/cropped-favicon-150x150.png',
+    apple: '/assets/cropped-favicon-150x150.png',
+  },
   robots: {
     index: true,
     follow: true,
