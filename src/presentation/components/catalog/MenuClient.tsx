@@ -26,10 +26,21 @@ export const MenuClient: React.FC<MenuClientProps> = ({
   initialProducts,
 }) => {
   const [categories] = useState<CategoryItem[]>(initialCategories);
-  const [products] = useState<typeof initialProducts>(initialProducts);
+  const [products, setProducts] = useState<typeof initialProducts>(initialProducts);
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [currentPage, setCurrentPage] = useState<number>(1);
+
+  React.useEffect(() => {
+    fetch('/api/products')
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setProducts(data);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   // Reset to page 1 whenever category or search filter changes
   const handleCategoryChange = (catId: string) => {

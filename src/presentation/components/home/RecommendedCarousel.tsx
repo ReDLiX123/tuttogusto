@@ -13,12 +13,25 @@ interface RecommendedCarouselProps {
   products: ProductProps[];
 }
 
-export const RecommendedCarousel: React.FC<RecommendedCarouselProps> = ({ products }) => {
+export const RecommendedCarousel: React.FC<RecommendedCarouselProps> = ({ products: initialProducts }) => {
+  const [products, setProducts] = useState<ProductProps[]>(initialProducts);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const isClickLocked = useRef(false);
   const isDragging = useRef(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  // Fetch latest products list on client mount
+  useEffect(() => {
+    fetch('/api/products?featured=true')
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setProducts(data);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   // Single pass render (0 duplicate copies) to keep DOM minimal and SEO 100% clean
   const [currentIndex, setCurrentIndex] = useState(0);
