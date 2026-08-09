@@ -90,10 +90,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product: rawProduct, o
         {/* Content with 2-line title container height */}
         <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
           <div className="space-y-1.5">
-            <h3 className="min-h-[2.5rem] sm:min-h-[2.75rem] font-heading text-base sm:text-xl font-semibold text-stone-100 group-hover:text-[#D4A373] transition-colors line-clamp-2 leading-snug flex items-center">
+            <h3 className="min-h-[2.5rem] font-heading text-base sm:text-lg font-semibold text-stone-100 group-hover:text-[#D4A373] transition-colors line-clamp-2 leading-snug flex items-center">
               {product.title}
             </h3>
-            <p className="h-9 text-xs sm:text-sm text-stone-400 line-clamp-2 leading-relaxed font-normal overflow-hidden">
+            <p className="min-h-[2.5rem] text-xs sm:text-sm text-stone-400 line-clamp-2 leading-snug font-normal">
               {product.description}
             </p>
           </div>
