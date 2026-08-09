@@ -1,7 +1,6 @@
 import type { NextConfig } from "next";
 
-const isVercel = process.env.VERCEL === "1";
-const isGithubPages = !isVercel && process.env.NODE_ENV === "production";
+const isGithubPages = process.env.BUILD_TARGET === "gh-pages";
 
 const nextConfig: NextConfig = {
   ...(isGithubPages ? { output: "export", basePath: "/tuttogusto", trailingSlash: true } : {}),
