@@ -46,33 +46,33 @@ export default async function HomePage() {
 
       {/* 2. Features Banner */}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="glass-panel p-6 rounded-2xl flex items-center gap-4 border border-stone-800">
-          <div className="p-3 bg-[#D4A373]/10 text-[#D4A373] rounded-xl">
-            <Flame className="w-6 h-6" />
+        <div className="glass-panel p-6 sm:p-7 rounded-2xl flex items-start gap-4.5 border border-stone-800/90 hover:border-[#D4A373]/40 transition-all duration-300 shadow-md">
+          <div className="p-3.5 bg-[#D4A373]/15 text-[#D4A373] rounded-2xl shrink-0">
+            <Flame className="w-7 h-7" />
           </div>
-          <div>
-            <h4 className="text-sm font-bold text-stone-100">Свежее каждое утро</h4>
-            <p className="text-xs text-stone-400">Выпекаем круассаны с 07:15 и готовим блюда сразу после вашего заказа</p>
-          </div>
-        </div>
-
-        <div className="glass-panel p-6 rounded-2xl flex items-center gap-4 border border-stone-800">
-          <div className="p-3 bg-[#D4A373]/10 text-[#D4A373] rounded-xl">
-            <Clock className="w-6 h-6" />
-          </div>
-          <div>
-            <h4 className="text-sm font-bold text-stone-100">Готовим к вашему приходу</h4>
-            <p className="text-xs text-stone-400">Оформите предзаказ на сайте и заберите кофе и блюда без ожидания в очереди</p>
+          <div className="space-y-1">
+            <h4 className="font-heading text-lg sm:text-xl font-bold text-stone-100 leading-snug">Свежее каждое утро</h4>
+            <p className="text-sm text-stone-300 leading-relaxed font-normal">Выпекаем круассаны с 07:15 и готовим блюда сразу после вашего заказа</p>
           </div>
         </div>
 
-        <div className="glass-panel p-6 rounded-2xl flex items-center gap-4 border border-stone-800">
-          <div className="p-3 bg-[#D4A373]/10 text-[#D4A373] rounded-xl">
-            <ShieldCheck className="w-6 h-6" />
+        <div className="glass-panel p-6 sm:p-7 rounded-2xl flex items-start gap-4.5 border border-stone-800/90 hover:border-[#D4A373]/40 transition-all duration-300 shadow-md">
+          <div className="p-3.5 bg-[#D4A373]/15 text-[#D4A373] rounded-2xl shrink-0">
+            <Clock className="w-7 h-7" />
           </div>
-          <div>
-            <h4 className="text-sm font-bold text-stone-100">Спешелти зёрна</h4>
-            <p className="text-xs text-stone-400">100% арабика свежей обжарки от лучшего ростера</p>
+          <div className="space-y-1">
+            <h4 className="font-heading text-lg sm:text-xl font-bold text-stone-100 leading-snug">Готовим к вашему приходу</h4>
+            <p className="text-sm text-stone-300 leading-relaxed font-normal">Оформите предзаказ на сайте и заберите кофе и блюда без ожидания в очереди</p>
+          </div>
+        </div>
+
+        <div className="glass-panel p-6 sm:p-7 rounded-2xl flex items-start gap-4.5 border border-stone-800/90 hover:border-[#D4A373]/40 transition-all duration-300 shadow-md">
+          <div className="p-3.5 bg-[#D4A373]/15 text-[#D4A373] rounded-2xl shrink-0">
+            <ShieldCheck className="w-7 h-7" />
+          </div>
+          <div className="space-y-1">
+            <h4 className="font-heading text-lg sm:text-xl font-bold text-stone-100 leading-snug">Спешелти зёрна</h4>
+            <p className="text-sm text-stone-300 leading-relaxed font-normal">100% арабика свежей обжарки от лучшего ростера</p>
           </div>
         </div>
       </section>
