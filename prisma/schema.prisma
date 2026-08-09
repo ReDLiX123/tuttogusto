@@ -1,6 +1,7 @@
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 generator client {
@@ -23,9 +24,9 @@ model Product {
   description  String
   price        Float
   image        String
-  type         String      // 'DISH' | 'DRINK' | 'BAKERY'
-  weightVolume String?     // e.g. "350g", "400ml", "1 шт"
-  prepTime     Int?        // minutes
+  type         String
+  weightVolume String?
+  prepTime     Int?
   discount     Float?      @default(0)
   isAvailable  Boolean     @default(true)
   isFeatured   Boolean     @default(false)
@@ -42,7 +43,7 @@ model Order {
   phone        String
   address      String?
   comments     String?
-  status       String      @default("NEW") // "NEW" | "PROCESSING" | "COMPLETED" | "CANCELLED"
+  status       String      @default("NEW")
   totalAmount  Float
   items        OrderItem[]
   createdAt    DateTime    @default(now())
