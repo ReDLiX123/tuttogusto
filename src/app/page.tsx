@@ -3,10 +3,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { HeroSlider } from '@/presentation/components/home/HeroSlider';
 import { RecommendedCarousel } from '@/presentation/components/home/RecommendedCarousel';
+import { NewsSection } from '@/presentation/components/home/NewsSection';
 import { productService, newsService } from '@/application/container';
 import { STATIC_PRODUCTS, STATIC_NEWS } from '@/domain/staticData';
 import { getImageUrl } from '@/presentation/utils/imageUtils';
-import { Flame, Clock, ShieldCheck, Heart } from 'lucide-react';
+import { Flame, Clock, ShieldCheck } from 'lucide-react';
 
 export default async function HomePage() {
   let featuredProducts: any[] = [];
@@ -81,48 +82,7 @@ export default async function HomePage() {
       <RecommendedCarousel products={featuredProducts} />
 
       {/* 4. News & Promotions Banner Carousel */}
-      {newsList.length > 0 && (
-        <section className="space-y-6">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-bold text-stone-100 flex items-center gap-2">
-              <Heart className="w-5 h-5 text-[#E76F51]" />
-              <span>Акции & События в кофейне</span>
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {newsList.map((news) => (
-              <div
-                key={news.id}
-                className="glass-panel rounded-2xl overflow-hidden border border-stone-800 flex flex-col group hover:border-[#D4A373]/40 transition-all"
-              >
-                <div className="relative h-44 w-full bg-stone-900 overflow-hidden">
-                  <Image
-                    src={getImageUrl(news.image)}
-                    alt={news.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-transparent to-transparent" />
-                </div>
-                <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
-                  <div>
-                    <h3 className="text-base font-bold text-stone-100 group-hover:text-[#D4A373] transition-colors">
-                      {news.title}
-                    </h3>
-                    <p className="text-xs text-stone-400 mt-2 leading-relaxed">
-                      {news.content}
-                    </p>
-                  </div>
-                  <span className="text-[11px] text-stone-500 font-semibold block pt-2 border-t border-stone-800">
-                    {new Date(news.createdAt).toLocaleDateString('ru-RU')}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
+      <NewsSection initialNews={newsList} />
 
       {/* 5. Atmosphere CTA */}
       <section className="relative rounded-3xl overflow-hidden glass-panel p-8 sm:p-12 border border-[#D4A373]/30 flex flex-col md:flex-row items-center justify-between gap-8">
