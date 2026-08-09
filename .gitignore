@@ -45,3 +45,16 @@ next-env.d.ts
 /src/generated/prisma
 
 .vercel
+
+# AI / agent metadata files
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+prompt.md
+skills-lock.json
+tuttogusto-issues-to-fix.md
+tuttogusto-stack.md
+/.agents/
+/.claude/
+/.windsurf/
+/scratch/
