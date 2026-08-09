@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { newsService } from '@/application/container';
 import { News } from '@/domain/entities/News';
+import { STATIC_NEWS } from '@/domain/staticData';
 
 export const dynamic = 'force-dynamic';
 
@@ -17,7 +18,7 @@ export async function GET() {
     }));
     return NextResponse.json(json);
   } catch (error: any) {
-    return NextResponse.json([]);
+    return NextResponse.json(STATIC_NEWS);
   }
 }
 
