@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Plus_Jakarta_Sans } from 'next/font/google';
+import { Inter, Fraunces } from 'next/font/google';
 import './globals.css';
 import { CartProvider } from '@/presentation/context/CartContext';
 import { Navbar } from '@/presentation/components/layout/Navbar';
@@ -7,10 +7,17 @@ import { Footer } from '@/presentation/components/layout/Footer';
 import { CartDrawer } from '@/presentation/components/cart/CartDrawer';
 import { SchemaOrg } from '@/presentation/components/seo/SchemaOrg';
 
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ['latin'],
+const inter = Inter({
+  subsets: ['latin', 'cyrillic'],
   weight: ['400', '500', '600', '700', '800'],
-  variable: '--font-jakarta',
+  variable: '--font-body',
+  display: 'swap',
+});
+
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  variable: '--font-heading',
+  display: 'swap',
 });
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://tuttogusto.ru';
@@ -51,8 +58,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ru" className={`${jakarta.variable} scroll-smooth`}>
-      <body className="bg-[#1F1C19] text-stone-100 min-h-screen flex flex-col antialiased selection:bg-[#D4A373] selection:text-stone-950">
+    <html lang="ru" className={`${inter.variable} ${fraunces.variable} scroll-smooth`}>
+      <body className="font-sans bg-[#1F1C19] text-stone-100 min-h-screen flex flex-col antialiased selection:bg-[#D4A373] selection:text-stone-950">
         <SchemaOrg />
         <CartProvider>
           <Navbar />

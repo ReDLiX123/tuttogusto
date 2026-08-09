@@ -115,9 +115,9 @@ export const HeroSlider: React.FC = () => {
             className="object-cover pointer-events-none"
             priority
           />
-          {/* Lighter, softer overlay gradient for brighter food photos */}
-          <div className="absolute inset-0 bg-gradient-to-r from-stone-950/80 via-stone-950/40 to-transparent pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-t from-stone-950/70 via-transparent to-transparent pointer-events-none" />
+          {/* High-contrast multi-layer gradient overlay for maximum text legibility */}
+          <div className="absolute inset-0 bg-gradient-to-r from-stone-950/90 via-stone-950/60 to-stone-950/30 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-950/40 to-transparent pointer-events-none" />
 
           {/* Slide Content */}
           <div className="relative z-10 h-full max-w-4xl mx-auto px-6 md:px-12 flex flex-col justify-center space-y-6">
@@ -125,7 +125,7 @@ export const HeroSlider: React.FC = () => {
               initial={{ y: 15, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.4 }}
-              className="inline-flex items-center gap-2 bg-[#D4A373]/25 border border-[#D4A373]/40 text-[#D4A373] text-xs font-bold px-3.5 py-1.5 rounded-full w-fit backdrop-blur-md shadow-md"
+              className="inline-flex items-center gap-2 bg-[#D4A373]/25 border border-[#D4A373]/40 text-[#D4A373] text-xs font-semibold uppercase tracking-widest px-3.5 py-1.5 rounded-full w-fit backdrop-blur-md shadow-md"
             >
               <Star className="w-3.5 h-3.5 fill-[#D4A373] text-[#D4A373]" />
               <span>{SLIDES[current].subtitle}</span>
@@ -135,7 +135,7 @@ export const HeroSlider: React.FC = () => {
               initial={{ y: 15, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.3, duration: 0.4 }}
-              className="text-3xl md:text-5xl font-black text-stone-100 tracking-tight leading-none drop-shadow-md"
+              className="font-heading text-4xl sm:text-6xl md:text-7xl font-bold text-stone-100 tracking-tight leading-[1.05] drop-shadow-md"
             >
               {SLIDES[current].title}
             </motion.h1>
@@ -144,7 +144,7 @@ export const HeroSlider: React.FC = () => {
               initial={{ y: 15, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.4, duration: 0.4 }}
-              className="text-sm md:text-base text-stone-200 max-w-xl leading-relaxed drop-shadow-sm font-medium"
+              className="text-base font-normal text-stone-200 max-w-xl leading-relaxed drop-shadow-sm"
             >
               {SLIDES[current].description}
             </motion.p>
@@ -157,7 +157,7 @@ export const HeroSlider: React.FC = () => {
             >
               <Link
                 href={SLIDES[current].ctaLink}
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-[#D4A373] to-[#BC8A5F] hover:from-[#E5B484] text-stone-950 px-7 py-3.5 rounded-full font-extrabold text-sm shadow-xl transition-all transform hover:scale-105"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-[#D4A373] to-[#BC8A5F] hover:from-[#E5B484] text-stone-950 px-7 py-3.5 rounded-full font-bold text-sm shadow-xl transition-all transform hover:scale-105"
               >
                 <span>{SLIDES[current].ctaText}</span>
                 <ArrowRight className="w-4 h-4" />
@@ -167,7 +167,7 @@ export const HeroSlider: React.FC = () => {
         </motion.div>
       </AnimatePresence>
 
-      {/* Navigation Arrows (Hidden on mobile <640px to prevent text obstruction, visible on tablet & desktop) */}
+      {/* Navigation Arrows */}
       <button
         onClick={handleManualPrev}
         className="hidden sm:flex absolute left-4 top-1/2 -translate-y-1/2 z-20 p-3 bg-stone-900/60 hover:bg-stone-900 text-stone-200 rounded-full backdrop-blur-sm border border-stone-800 transition-all hover:scale-110 active:scale-95 shadow-lg select-none"

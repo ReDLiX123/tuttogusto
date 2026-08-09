@@ -101,11 +101,11 @@ export const RecommendedCarousel: React.FC<RecommendedCarouselProps> = ({ produc
       {/* Section Header */}
       <div className="flex items-end justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-1.5 text-xs font-extrabold text-[#D4A373] uppercase tracking-widest mb-1">
+          <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#D4A373] uppercase tracking-widest mb-1">
             <Star className="w-3.5 h-3.5 fill-[#D4A373] text-[#D4A373]" />
             <span>Специальный выбор</span>
           </div>
-          <h2 className="text-xl sm:text-3xl font-black text-stone-100">
+          <h2 className="font-heading text-2xl sm:text-4xl font-semibold leading-tight text-stone-100">
             Рекомендуем попробовать
           </h2>
         </div>

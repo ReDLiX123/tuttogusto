@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@theme {
+  --font-heading: var(--font-heading), serif;
+  --font-sans: var(--font-body), sans-serif;
+}
+
 @layer base {
   :root {
     --bg-primary: #1F1C19;
@@ -12,10 +17,14 @@
     --text-secondary: #A8A29E;
   }
 
+  h1, h2, h3, h4, .heading {
+    font-family: var(--font-heading), serif;
+  }
+
   body {
     background-color: var(--bg-primary);
     color: var(--text-primary);
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: var(--font-body), sans-serif;
     overflow-x: hidden;
   }
 }
