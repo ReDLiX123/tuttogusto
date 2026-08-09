@@ -35,6 +35,15 @@
   background: #D4A373;
 }
 
+/* Utility to hide scrollbars for horizontal carousels */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* Glassmorphism classes */
 .glass-panel {
   background: rgba(42, 37, 33, 0.85);

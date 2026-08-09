@@ -4,13 +4,13 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useCart } from '@/presentation/context/CartContext';
 import { pricingService } from '@/application/container';
-import { CheckCircle2, ShoppingBag, ArrowLeft, Loader2, Phone, MapPin, User, FileText } from 'lucide-react';
+import { CheckCircle2, ShoppingBag, ArrowLeft, Loader2, Phone, MapPin, User, FileText, Clock } from 'lucide-react';
 
 export default function CheckoutPage() {
   const { cart, clearCart } = useCart();
   const [customerName, setCustomerName] = useState('');
   const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
+  const [pickupTime, setPickupTime] = useState('');
   const [comments, setComments] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [createdOrderId, setCreatedOrderId] = useState<string | null>(null);
@@ -33,7 +33,7 @@ export default function CheckoutPage() {
         body: JSON.stringify({
           customerName,
           phone,
-          address,
+          address: pickupTime ? `Время визита: ${pickupTime}` : 'Самовывоз в кофейне',
           comments,
           items: cart.items.map((i) => ({
             productId: i.product.id,
@@ -43,7 +43,7 @@ export default function CheckoutPage() {
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Ошибка при оформлении');
+      if (!res.ok) throw new Error(data.error || 'Ошибка при оформлении предзаказа');
 
       setCreatedOrderId(data.order.id);
       clearCart();
@@ -56,32 +56,38 @@ export default function CheckoutPage() {
 
   if (createdOrderId) {
     return (
-      <div className="py-20 text-center space-y-6 max-w-lg mx-auto glass-panel p-8 rounded-3xl border border-[#D4A373]/30 my-8">
+      <div className="py-16 text-center space-y-6 max-w-lg mx-auto glass-panel p-8 rounded-3xl border border-[#D4A373]/30 my-8">
         <div className="w-20 h-20 bg-emerald-500/10 text-emerald-400 rounded-full flex items-center justify-center mx-auto border border-emerald-500/30">
           <CheckCircle2 className="w-12 h-12" />
         </div>
-        <h1 className="text-3xl font-black text-stone-100">Заказ успешно оформлен!</h1>
+        <h1 className="text-3xl font-black text-stone-100">Предзаказ успешно создан!</h1>
         <div className="bg-stone-900/80 p-4 rounded-xl text-left text-xs space-y-2 text-stone-300 border border-stone-800">
           <p>
             Номер заказа: <strong className="text-[#D4A373] text-sm">{createdOrderId}</strong>
           </p>
           <p>
-            Имя клиента: <strong>{customerName}</strong>
+            Имя гостя: <strong>{customerName}</strong>
           </p>
           <p>
             Телефон: <strong>{phone}</strong>
           </p>
-          {address && (
+          <p>
+            Способ получения: <strong className="text-emerald-400">Самовывоз в кофейне</strong>
+          </p>
+          <p>
+            Адрес выдачи: <strong>ул. Кленовая, 15/3 (м-н Хрустальный парк)</strong>
+          </p>
+          {pickupTime && (
             <p>
-              Адрес доставки: <strong>{address}</strong>
+              Время визита: <strong className="text-[#D4A373]">{pickupTime}</strong>
             </p>
           )}
           <p>
-            Статус: <span className="bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded font-extrabold">НОВЫЙ</span>
+            Статус: <span className="bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded font-extrabold">ПЕРЕДАН БАРИСТА</span>
           </p>
         </div>
-        <p className="text-xs text-stone-400">
-          Наш администратор кофейни «Туттогусто» свяжется с вами в течение 5 минут для подтверждения заказа.
+        <p className="text-xs text-stone-400 leading-relaxed">
+          Заявка отправлена бариста кофейни «Туттогусто». Начинаем готовить! Заходите за вашим заказом без ожидания в очереди.
         </p>
         <Link
           href="/"
@@ -96,7 +102,7 @@ export default function CheckoutPage() {
   if (cart.items.length === 0) {
     return (
       <div className="py-20 text-center space-y-4">
-        <h2 className="text-xl font-bold text-stone-200">Корзина пуста</h2>
+        <h2 className="text-xl font-bold text-stone-200">Корзина предзаказа пуста</h2>
         <Link href="/menu" className="text-xs text-[#D4A373] hover:underline">
           Вернуться к меню
         </Link>
@@ -113,7 +119,7 @@ export default function CheckoutPage() {
         >
           <ArrowLeft className="w-4 h-4" />
         </Link>
-        <h1 className="text-3xl font-black text-stone-100">Оформление заказа</h1>
+        <h1 className="text-3xl font-black text-stone-100">Оформление предзаказа</h1>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -122,7 +128,7 @@ export default function CheckoutPage() {
           <div className="glass-panel p-6 rounded-2xl border border-stone-800 space-y-4">
             <h2 className="text-base font-bold text-stone-100 flex items-center gap-2">
               <User className="w-4 h-4 text-[#D4A373]" />
-              <span>Данные покупателя</span>
+              <span>Данные гостя</span>
             </h2>
 
             <div className="space-y-3">
@@ -165,21 +171,26 @@ export default function CheckoutPage() {
           <div className="glass-panel p-6 rounded-2xl border border-stone-800 space-y-4">
             <h2 className="text-base font-bold text-stone-100 flex items-center gap-2">
               <MapPin className="w-4 h-4 text-[#D4A373]" />
-              <span>Доставка по Иркутску</span>
+              <span>Самовывоз из кофейни</span>
             </h2>
+
+            <div className="p-3.5 bg-stone-900/90 rounded-xl border border-stone-800 text-xs text-stone-300 space-y-1">
+              <p className="font-bold text-[#D4A373]">Адрес кофейни «Туттогусто»:</p>
+              <p>д. Новолисиха, м-н Хрустальный парк, ул. Кленовая, 15/3</p>
+            </div>
 
             <div className="space-y-3">
               <div>
                 <label className="block text-xs font-semibold text-stone-400 mb-1">
-                  Адрес (улица, дом, квартира)
+                  Удобное время визита (необязательно)
                 </label>
                 <div className="relative">
-                  <MapPin className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-stone-500" />
+                  <Clock className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-stone-500" />
                   <input
                     type="text"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    placeholder="ул. Карла Маркса, д. 10, кв. 4 (Оставьте пустым для самовывоза)"
+                    value={pickupTime}
+                    onChange={(e) => setPickupTime(e.target.value)}
+                    placeholder="Например: буду через 15 минут / к 14:30"
                     className="w-full pl-9 pr-4 py-2.5 bg-stone-900 border border-stone-800 rounded-xl text-xs text-stone-100 placeholder-stone-600 focus:outline-none focus:border-[#D4A373]"
                   />
                 </div>
@@ -187,7 +198,7 @@ export default function CheckoutPage() {
 
               <div>
                 <label className="block text-xs font-semibold text-stone-400 mb-1">
-                  Комментарии к заказу
+                  Пожелания к напиткам или блюдам
                 </label>
                 <div className="relative">
                   <FileText className="w-4 h-4 absolute left-3 top-3 text-stone-500" />
@@ -195,7 +206,7 @@ export default function CheckoutPage() {
                     rows={3}
                     value={comments}
                     onChange={(e) => setComments(e.target.value)}
-                    placeholder="Пожелания к времени доставки, звонку или упаковке..."
+                    placeholder="Без сахара, на кокосовом молоке, сделать погорячее и т.д."
                     className="w-full pl-9 pr-4 py-2.5 bg-stone-900 border border-stone-800 rounded-xl text-xs text-stone-100 placeholder-stone-600 focus:outline-none focus:border-[#D4A373]"
                   />
                 </div>
@@ -211,10 +222,10 @@ export default function CheckoutPage() {
             {submitting ? (
               <>
                 <Loader2 className="w-5 h-5 animate-spin" />
-                <span>Оформляем заказ...</span>
+                <span>Отправляем бариста...</span>
               </>
             ) : (
-              <span>Подтвердить заказ • {total} ₽</span>
+              <span>Подтвердить предзаказ • {total} ₽</span>
             )}
           </button>
         </form>
@@ -223,7 +234,7 @@ export default function CheckoutPage() {
         <div className="glass-panel p-6 rounded-2xl border border-stone-800 space-y-4 h-fit">
           <h2 className="text-base font-bold text-stone-100 flex items-center gap-2">
             <ShoppingBag className="w-4 h-4 text-[#D4A373]" />
-            <span>Состав заказа ({cart.getTotalItemsCount()})</span>
+            <span>Состав предзаказа ({cart.getTotalItemsCount()})</span>
           </h2>
 
           <div className="space-y-3 max-h-60 overflow-y-auto pr-1">
@@ -241,6 +252,10 @@ export default function CheckoutPage() {
             <div className="flex justify-between">
               <span>Сумма:</span>
               <span>{subtotal} ₽</span>
+            </div>
+            <div className="flex justify-between text-[#D4A373]">
+              <span>Самовывоз:</span>
+              <span className="font-bold text-emerald-400">Бесплатно</span>
             </div>
             <div className="flex justify-between text-sm font-black text-stone-100 pt-2 border-t border-stone-800">
               <span>Итого:</span>

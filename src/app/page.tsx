@@ -52,7 +52,7 @@ export default async function HomePage() {
           </div>
           <div>
             <h4 className="text-sm font-bold text-stone-100">Свежее каждое утро</h4>
-            <p className="text-xs text-stone-400">Выпекаем круассаны с 07:15 и режем салаты прямо перед доставкой</p>
+            <p className="text-xs text-stone-400">Выпекаем круассаны с 07:15 и готовим блюда сразу после вашего заказа</p>
           </div>
         </div>
 
@@ -61,8 +61,8 @@ export default async function HomePage() {
             <Clock className="w-6 h-6" />
           </div>
           <div>
-            <h4 className="text-sm font-bold text-stone-100">Доставка за 30-45 мин</h4>
-            <p className="text-xs text-stone-400">Собственные курьеры привезут еду горячей по Иркутску</p>
+            <h4 className="text-sm font-bold text-stone-100">Готовим к вашему приходу</h4>
+            <p className="text-xs text-stone-400">Оформите предзаказ на сайте и заберите кофе и блюда без ожидания в очереди</p>
           </div>
         </div>
 
@@ -134,14 +134,14 @@ export default async function HomePage() {
             Уютное место для встреч, работы и вдохновения
           </h2>
           <p className="text-xs sm:text-sm text-stone-300 leading-relaxed">
-            Мы находимся по адресу: <strong className="text-stone-100">д. Новолисиха, м-н Хрустальный парк, ул. Кленовая, 15/3</strong>. Заходите за свежим капучино по дороге на работу или заказывайте доставку прямо домой!
+            Мы находимся по адресу: <strong className="text-stone-100">д. Новолисиха, м-н Хрустальный парк, ул. Кленовая, 15/3</strong>. Заходите за свежим капучино по дороге на работу или оформляйте быстрый предзаказ онлайн!
           </p>
           <div className="pt-2 flex flex-wrap gap-4">
             <Link
               href="/menu"
               className="bg-[#D4A373] hover:bg-[#E5B484] text-stone-950 px-6 py-3 rounded-full text-xs font-extrabold transition-all"
             >
-              Заказать доставку
+              Сделать предзаказ
             </Link>
             <a
               href="tel:+79832496019"

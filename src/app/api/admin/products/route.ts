@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { productService } from '@/application/container';
 import { ProductFactory } from '@/domain/entities/ProductFactory';
 
-export const dynamic = 'force-static';
+export const dynamic = 'force-dynamic';
 
 export async function POST(request: Request) {
   try {

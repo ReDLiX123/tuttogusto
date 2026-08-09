@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { newsService } from '@/application/container';
 import { News } from '@/domain/entities/News';
 
-export const dynamic = 'force-static';
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {

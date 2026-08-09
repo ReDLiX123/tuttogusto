@@ -65,10 +65,11 @@ export abstract class Product {
 
   // Encapsulated Business Methods
   public getFinalPrice(): number {
+    const basePrice = Number(this._price) || 0;
     if (this._discount > 0) {
-      return Math.max(0, Math.round(this._price * (1 - this._discount / 100)));
+      return Math.max(0, Math.round(basePrice * (1 - this._discount / 100)));
     }
-    return this._price;
+    return basePrice;
   }
 
   public updatePrice(newPrice: number): void {

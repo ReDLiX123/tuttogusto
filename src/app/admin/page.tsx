@@ -136,7 +136,7 @@ export default function AdminOrdersPage() {
                       <strong className="text-stone-200">{order.customerName}</strong> ({order.phone})
                     </p>
                     {order.address && (
-                      <p className="text-xs text-[#D4A373] mt-0.5">📍 Доставка: {order.address}</p>
+                      <p className="text-xs text-[#D4A373] mt-0.5">📍 Детали / Время визита: {order.address}</p>
                     )}
                     {order.comments && (
                       <p className="text-xs text-stone-400 italic mt-0.5">💬 Комментарий: {order.comments}</p>

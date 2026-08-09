@@ -266,80 +266,85 @@ export default function AdminProductsPage() {
 
       {/* Product Add/Edit Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-          <div className="bg-[#1C1917] border border-stone-800 rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-stone-800 pb-3">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
+          <div className="bg-[#1C1917] border border-stone-800 rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl my-auto max-h-[90vh] flex flex-col">
+            <div className="flex items-center justify-between border-b border-stone-800 pb-3 shrink-0">
               <h3 className="text-lg font-bold text-stone-100">
                 {formData.id ? 'Редактировать блюдо' : 'Создать новое блюдо'}
               </h3>
-              <button onClick={() => setIsModalOpen(false)} className="text-stone-400 hover:text-white">
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="text-stone-400 hover:text-white p-1 rounded-lg hover:bg-stone-800 transition-colors"
+              >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <form onSubmit={handleSaveProduct} className="space-y-3 text-xs">
+            <form onSubmit={handleSaveProduct} className="space-y-4 text-xs overflow-y-auto pr-1">
               <div>
-                <label className="block text-stone-400 mb-1 font-semibold">Название блюда</label>
+                <label className="block text-stone-300 mb-1.5 font-bold">Название блюда</label>
                 <input
                   type="text"
                   required
                   value={formData.title || ''}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="w-full p-2.5 bg-stone-900 border border-stone-800 rounded-xl text-stone-100"
+                  placeholder="например, Завтрак Вода"
+                  className="w-full p-2.5 bg-stone-900 border border-stone-800 rounded-xl text-stone-100 placeholder-stone-600 focus:outline-none focus:border-[#D4A373]"
                 />
               </div>
 
               <div>
-                <label className="block text-stone-400 mb-1 font-semibold">Описание</label>
+                <label className="block text-stone-300 mb-1.5 font-bold">Описание</label>
                 <textarea
                   rows={2}
                   required
                   value={formData.description || ''}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full p-2.5 bg-stone-900 border border-stone-800 rounded-xl text-stone-100"
+                  placeholder="Состав блюда..."
+                  className="w-full p-2.5 bg-stone-900 border border-stone-800 rounded-xl text-stone-100 placeholder-stone-600 focus:outline-none focus:border-[#D4A373]"
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-stone-400 mb-1 font-semibold">Объем / Вес (например: 300g, 400 мл)</label>
+                  <label className="block text-stone-300 mb-1.5 font-bold">Объем / Вес</label>
                   <input
                     type="text"
-                    placeholder="300g или 400 мл"
+                    placeholder="например: 300g или 400 мл"
                     value={formData.weightVolume || ''}
                     onChange={(e) => setFormData({ ...formData, weightVolume: e.target.value })}
-                    className="w-full p-2.5 bg-stone-900 border border-stone-800 rounded-xl text-stone-100"
+                    className="w-full p-2.5 bg-stone-900 border border-stone-800 rounded-xl text-stone-100 placeholder-stone-600 focus:outline-none focus:border-[#D4A373]"
                   />
                 </div>
                 <div>
-                  <label className="block text-stone-400 mb-1 font-semibold">Время готовки (в минутах)</label>
+                  <label className="block text-stone-300 mb-1.5 font-bold">Время готовки (мин)</label>
                   <input
                     type="number"
                     placeholder="15"
                     value={formData.prepTime || ''}
                     onChange={(e) => setFormData({ ...formData, prepTime: e.target.value ? Number(e.target.value) : undefined })}
-                    className="w-full p-2.5 bg-stone-900 border border-stone-800 rounded-xl text-stone-100"
+                    className="w-full p-2.5 bg-stone-900 border border-stone-800 rounded-xl text-stone-100 placeholder-stone-600 focus:outline-none focus:border-[#D4A373]"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-stone-400 mb-1 font-semibold">Цена (₽)</label>
+                  <label className="block text-stone-300 mb-1.5 font-bold">Цена (₽)</label>
                   <input
                     type="number"
                     required
                     value={formData.price || 0}
                     onChange={(e) => setFormData({ ...formData, price: Number(e.target.value) })}
-                    className="w-full p-2.5 bg-stone-900 border border-stone-800 rounded-xl text-stone-100"
+                    className="w-full p-2.5 bg-stone-900 border border-stone-800 rounded-xl text-stone-100 focus:outline-none focus:border-[#D4A373]"
                   />
                 </div>
                 <div>
-                  <label className="block text-stone-400 mb-1 font-semibold">Тип (DISH/DRINK/BAKERY)</label>
+                  <label className="block text-stone-300 mb-1.5 font-bold">Тип блюда</label>
                   <select
                     value={formData.type || 'DISH'}
                     onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                    className="w-full p-2.5 bg-stone-900 border border-stone-800 rounded-xl text-stone-100"
+                    className="w-full p-2.5 bg-stone-900 border border-stone-800 rounded-xl text-stone-100 focus:outline-none focus:border-[#D4A373] cursor-pointer"
                   >
                     <option value="DISH">DISH (Кухня)</option>
                     <option value="DRINK">DRINK (Напиток)</option>
@@ -348,22 +353,23 @@ export default function AdminProductsPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-stone-400 mb-1 font-semibold">Путь к фото (public/assets/...)</label>
+                  <label className="block text-stone-300 mb-1.5 font-bold">Путь к фото</label>
                   <input
                     type="text"
                     value={formData.image || ''}
                     onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                    className="w-full p-2.5 bg-stone-900 border border-stone-800 rounded-xl text-stone-100"
+                    placeholder="/assets/menu/..."
+                    className="w-full p-2.5 bg-stone-900 border border-stone-800 rounded-xl text-stone-100 placeholder-stone-600 focus:outline-none focus:border-[#D4A373]"
                   />
                 </div>
                 <div>
-                  <label className="block text-stone-400 mb-1 font-semibold">Категория</label>
+                  <label className="block text-stone-300 mb-1.5 font-bold">Категория</label>
                   <select
                     value={formData.categoryId || ''}
                     onChange={(e) => setFormData({ ...formData, categoryId: e.target.value })}
-                    className="w-full p-2.5 bg-stone-900 border border-stone-800 rounded-xl text-stone-100"
+                    className="w-full p-2.5 bg-stone-900 border border-stone-800 rounded-xl text-stone-100 focus:outline-none focus:border-[#D4A373] cursor-pointer"
                   >
                     {categories.map((c) => (
                       <option key={c.id} value={c.id}>
@@ -374,20 +380,22 @@ export default function AdminProductsPage() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-6 pt-2">
-                <label className="flex items-center gap-2 cursor-pointer text-stone-300">
+              <div className="flex items-center gap-6 pt-3 border-t border-stone-800/60">
+                <label className="flex items-center gap-2 cursor-pointer text-stone-300 font-semibold select-none">
                   <input
                     type="checkbox"
                     checked={formData.isAvailable ?? true}
                     onChange={(e) => setFormData({ ...formData, isAvailable: e.target.checked })}
+                    className="w-4 h-4 accent-[#D4A373]"
                   />
                   <span>Доступен в меню</span>
                 </label>
-                <label className="flex items-center gap-2 cursor-pointer text-stone-300">
+                <label className="flex items-center gap-2 cursor-pointer text-stone-300 font-semibold select-none">
                   <input
                     type="checkbox"
                     checked={formData.isFeatured ?? false}
                     onChange={(e) => setFormData({ ...formData, isFeatured: e.target.checked })}
+                    className="w-4 h-4 accent-[#D4A373]"
                   />
                   <span>Хит на главной</span>
                 </label>
@@ -395,7 +403,7 @@ export default function AdminProductsPage() {
 
               <button
                 type="submit"
-                className="w-full py-3 bg-[#D4A373] text-stone-950 font-extrabold rounded-xl text-xs shadow-lg mt-4"
+                className="w-full py-3.5 bg-gradient-to-r from-[#D4A373] to-[#BC8A5F] hover:from-[#E5B484] text-stone-950 font-extrabold rounded-xl text-xs shadow-lg mt-4 transition-all"
               >
                 Сохранить в меню
               </button>

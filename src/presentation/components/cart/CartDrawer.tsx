@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Trash2, Plus, Minus, ShoppingBag, ArrowRight, Truck } from 'lucide-react';
+import { X, Trash2, Plus, Minus, ShoppingBag, ArrowRight, Clock, MapPin } from 'lucide-react';
 import { useCart } from '@/presentation/context/CartContext';
 import { pricingService } from '@/application/container';
 
@@ -12,9 +12,7 @@ export const CartDrawer: React.FC = () => {
   const { cart, isDrawerOpen, setIsDrawerOpen, updateQuantity, removeFromCart } = useCart();
 
   const subtotal = cart.getTotalAmount();
-  const deliveryFee = pricingService.calculateDeliveryFee(subtotal);
   const total = pricingService.calculateTotal(cart);
-  const remainingForFreeDelivery = pricingService.getFreeDeliveryRemaining(subtotal);
 
   return (
     <AnimatePresence>
@@ -42,7 +40,7 @@ export const CartDrawer: React.FC = () => {
               <div className="flex items-center gap-2">
                 <ShoppingBag className="w-5 h-5 text-[#D4A373]" />
                 <h2 className="text-lg font-bold text-stone-100 uppercase tracking-wide">
-                  Ваша корзина
+                  Ваш предзаказ
                 </h2>
                 <span className="text-xs bg-stone-800 text-[#D4A373] px-2 py-0.5 rounded-full font-bold">
                   {cart.getTotalItemsCount()}
@@ -56,25 +54,13 @@ export const CartDrawer: React.FC = () => {
               </button>
             </div>
 
-            {/* Free Delivery Bar */}
-            <div className="bg-stone-900/90 p-3 px-5 border-b border-stone-800/60">
-              <div className="flex items-center gap-2 text-xs text-stone-300">
-                <Truck className="w-4 h-4 text-[#D4A373]" />
-                {remainingForFreeDelivery > 0 ? (
-                  <span>
-                    Добавьте блюд на <strong className="text-[#D4A373]">{remainingForFreeDelivery} ₽</strong> для <strong className="text-emerald-400">бесплатной доставки</strong>!
-                  </span>
-                ) : (
-                  <span className="text-emerald-400 font-semibold">
-                    🎉 У вас бесплатная доставка по Иркутску!
-                  </span>
-                )}
-              </div>
-              <div className="w-full bg-stone-800 h-1.5 rounded-full mt-2 overflow-hidden">
-                <div
-                  className="bg-gradient-to-r from-[#D4A373] to-emerald-400 h-full transition-all duration-300"
-                  style={{ width: `${Math.min(100, (subtotal / 1500) * 100)}%` }}
-                />
+            {/* Pickup Info Banner */}
+            <div className="bg-[#D4A373]/10 p-3.5 px-5 border-b border-[#D4A373]/20">
+              <div className="flex items-center gap-2 text-xs text-stone-200">
+                <Clock className="w-4 h-4 text-[#D4A373] shrink-0" />
+                <span>
+                  Заказ поступит бариста сразу после отправки. Приготовим к вашему приходу!
+                </span>
               </div>
             </div>
 
@@ -83,8 +69,8 @@ export const CartDrawer: React.FC = () => {
               {cart.items.length === 0 ? (
                 <div className="text-center py-16 text-stone-500 space-y-3">
                   <ShoppingBag className="w-12 h-12 mx-auto text-stone-700 stroke-1" />
-                  <p className="text-base font-medium">Ваша корзина пока пуста</p>
-                  <p className="text-xs text-stone-600">Выберите вкусные блюда в нашем меню</p>
+                  <p className="text-base font-medium">Ваш предзаказ пока пуст</p>
+                  <p className="text-xs text-stone-600">Выберите напитки и блюда в нашем меню</p>
                 </div>
               ) : (
                 cart.items.map((item) => (
@@ -152,9 +138,11 @@ export const CartDrawer: React.FC = () => {
                     <span>Подытог:</span>
                     <span>{subtotal} ₽</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span>Доставка:</span>
-                    <span>{deliveryFee === 0 ? 'Бесплатно' : `${deliveryFee} ₽`}</span>
+                  <div className="flex justify-between text-[#D4A373]">
+                    <span className="flex items-center gap-1">
+                      <MapPin className="w-3.5 h-3.5" /> Самовывоз (ул. Кленовая, 15/3):
+                    </span>
+                    <span className="font-bold text-emerald-400">Бесплатно</span>
                   </div>
                   <div className="flex justify-between text-sm font-bold text-white pt-2 border-t border-stone-800">
                     <span>Итого к оплате:</span>
@@ -168,14 +156,14 @@ export const CartDrawer: React.FC = () => {
                     onClick={() => setIsDrawerOpen(false)}
                     className="w-full text-center bg-stone-800 hover:bg-stone-700 text-stone-200 py-3 rounded-xl text-xs font-bold transition-all"
                   >
-                    В корзину
+                    Подробнее
                   </Link>
                   <Link
                     href="/checkout"
                     onClick={() => setIsDrawerOpen(false)}
                     className="w-full text-center bg-gradient-to-r from-[#D4A373] to-[#BC8A5F] hover:from-[#E5B484] text-stone-950 py-3 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-1.5"
                   >
-                    <span>Оформить</span>
+                    <span>Предзаказ</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>

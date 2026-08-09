@@ -91,7 +91,7 @@ export const AdminAuthGuard: React.FC<AdminAuthGuardProps> = ({ children }) => {
                   setInputKey(e.target.value);
                   setError('');
                 }}
-                placeholder="Введите секретный ключ..."
+                placeholder="Введите ключ доступа..."
                 className="w-full px-4 py-3 bg-stone-900 border border-stone-800 rounded-xl text-stone-100 text-sm placeholder-stone-500 focus:outline-none focus:border-[#D4A373] transition-all"
               />
               {error && <p className="text-xs text-red-400 mt-2 font-medium">{error}</p>}
@@ -105,10 +105,6 @@ export const AdminAuthGuard: React.FC<AdminAuthGuardProps> = ({ children }) => {
               <ArrowRight className="w-4 h-4" />
             </button>
           </form>
-
-          <div className="pt-4 border-t border-stone-800 text-[11px] text-stone-500 text-center relative z-10">
-            Подсказка для тестирования: секретный ключ <strong className="text-stone-300">tutto2026</strong>
-          </div>
         </div>
       </div>
     );
@@ -120,7 +116,7 @@ export const AdminAuthGuard: React.FC<AdminAuthGuardProps> = ({ children }) => {
       <div className="flex items-center justify-between px-4 py-2 bg-stone-900/60 rounded-xl border border-stone-800/80 text-xs">
         <div className="flex items-center gap-2 text-emerald-400 font-medium">
           <ShieldCheck className="w-4 h-4 text-emerald-400" />
-          <span>Авторизован админ-доступ (ключ: tutto2026)</span>
+          <span>Авторизован админ-доступ (Туттогусто)</span>
         </div>
         <button
           onClick={handleLogout}

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { orderService } from '@/application/container';
 
-export const dynamic = 'force-static';
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {

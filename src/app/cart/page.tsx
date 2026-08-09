@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useCart } from '@/presentation/context/CartContext';
 import { pricingService } from '@/application/container';
-import { Trash2, Plus, Minus, ArrowRight, ShoppingBag, Truck, Tag, Check } from 'lucide-react';
+import { Trash2, Plus, Minus, ArrowRight, ShoppingBag, MapPin, Tag, Check, Clock } from 'lucide-react';
 
 export default function CartPage() {
   const { cart, updateQuantity, removeFromCart, clearCart } = useCart();
@@ -14,9 +14,7 @@ export default function CartPage() {
   const [promoApplied, setPromoApplied] = useState(false);
 
   const subtotal = pricingService.calculateSubtotal(cart);
-  const deliveryFee = pricingService.calculateDeliveryFee(subtotal);
   const total = pricingService.calculateTotal(cart, promoDiscount);
-  const remainingForFreeDelivery = pricingService.getFreeDeliveryRemaining(subtotal);
 
   const handleApplyPromo = (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,7 +32,7 @@ export default function CartPage() {
         <div className="w-20 h-20 bg-stone-900 rounded-full flex items-center justify-center mx-auto border border-stone-800">
           <ShoppingBag className="w-10 h-10 text-stone-600 stroke-1" />
         </div>
-        <h1 className="text-2xl font-black text-stone-100">Ваша корзина пуста</h1>
+        <h1 className="text-2xl font-black text-stone-100">Ваш предзаказ пуст</h1>
         <p className="text-sm text-stone-400">
           Вы еще ничего не добавили. Перейдите в наше меню и выберите вкуснейшие авторские блюда и кофе!
         </p>
@@ -52,12 +50,18 @@ export default function CartPage() {
   return (
     <div className="space-y-8 py-6 max-w-5xl mx-auto">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-black text-stone-100">Корзина заказа</h1>
+        <div>
+          <h1 className="text-3xl font-black text-stone-100">Предзаказ блюд и напитков</h1>
+          <p className="text-xs text-stone-400 mt-1 flex items-center gap-1.5">
+            <Clock className="w-3.5 h-3.5 text-[#D4A373]" />
+            <span>Бариста приготовит ваш заказ точно к вашему приходу в кофейню</span>
+          </p>
+        </div>
         <button
           onClick={clearCart}
-          className="text-xs text-stone-400 hover:text-red-400 transition-colors flex items-center gap-1"
+          className="text-xs text-stone-400 hover:text-red-400 transition-colors flex items-center gap-1 shrink-0"
         >
-          <Trash2 className="w-3.5 h-3.5" /> Очистить корзину
+          <Trash2 className="w-3.5 h-3.5" /> Очистить
         </button>
       </div>
 
@@ -125,7 +129,7 @@ export default function CartPage() {
         {/* Order Summary & Promo */}
         <div className="space-y-6">
           <div className="glass-panel p-6 rounded-2xl border border-stone-800 space-y-5">
-            <h2 className="text-lg font-extrabold text-stone-100">Детали оплаты</h2>
+            <h2 className="text-lg font-extrabold text-stone-100">Детали предзаказа</h2>
 
             {/* Promo Code Form */}
             <form onSubmit={handleApplyPromo} className="flex gap-2">
@@ -152,7 +156,7 @@ export default function CartPage() {
             {/* Price breakdown */}
             <div className="space-y-2.5 text-xs text-stone-400 pt-3 border-t border-stone-800">
               <div className="flex justify-between">
-                <span>Стоимость блюд:</span>
+                <span>Подытог блюд:</span>
                 <span>{subtotal} ₽</span>
               </div>
               {promoDiscount > 0 && (
@@ -161,16 +165,16 @@ export default function CartPage() {
                   <span>-{Math.round((subtotal * promoDiscount) / 100)} ₽</span>
                 </div>
               )}
-              <div className="flex justify-between">
-                <span>Доставка по Иркутску:</span>
-                <span>{deliveryFee === 0 ? 'Бесплатно' : `${deliveryFee} ₽`}</span>
+              <div className="flex justify-between text-[#D4A373]">
+                <span>Способ получения:</span>
+                <span className="font-bold text-emerald-400">Самовывоз (Бесплатно)</span>
               </div>
-              {remainingForFreeDelivery > 0 && (
-                <div className="p-2.5 bg-stone-900 rounded-xl text-[11px] text-stone-400 flex items-center gap-2">
-                  <Truck className="w-4 h-4 text-[#D4A373] shrink-0" />
-                  <span>Добавьте еще на {remainingForFreeDelivery} ₽ для бесплатной доставки</span>
-                </div>
-              )}
+
+              <div className="p-3 bg-stone-900/90 rounded-xl text-[11px] text-stone-300 flex items-center gap-2 border border-stone-800">
+                <MapPin className="w-4 h-4 text-[#D4A373] shrink-0" />
+                <span>Выдача: <strong>ул. Кленовая, 15/3</strong> (м-н Хрустальный парк)</span>
+              </div>
+
               <div className="flex justify-between text-base font-black text-stone-100 pt-3 border-t border-stone-800">
                 <span>К оплате:</span>
                 <span className="text-[#D4A373] text-xl">{total} ₽</span>
@@ -181,7 +185,7 @@ export default function CartPage() {
               href="/checkout"
               className="w-full py-4 bg-gradient-to-r from-[#D4A373] to-[#BC8A5F] hover:from-[#E5B484] text-stone-950 rounded-xl font-extrabold text-sm flex items-center justify-center gap-2 shadow-xl transition-all"
             >
-              <span>Оформить заказ</span>
+              <span>Оформить предзаказ</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>

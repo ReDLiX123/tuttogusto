@@ -5,6 +5,7 @@ import { CartProvider } from '@/presentation/context/CartContext';
 import { Navbar } from '@/presentation/components/layout/Navbar';
 import { Footer } from '@/presentation/components/layout/Footer';
 import { CartDrawer } from '@/presentation/components/cart/CartDrawer';
+import { SchemaOrg } from '@/presentation/components/seo/SchemaOrg';
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -12,17 +13,47 @@ const jakarta = Plus_Jakarta_Sans({
   variable: '--font-jakarta',
 });
 
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://tuttogusto.ru';
+
 export const metadata: Metadata = {
-  title: 'Кофейня Туттогусто | Авторский кофе, кухни и свежая выпечка в Иркутске',
+  metadataBase: new URL(baseUrl),
+  title: 'Кофейня Туттогусто | Авторский кофе, кулинария и свежая выпечка в Иркутске',
   description:
-    'Доставка и самовывоз вкуснейших блюд, свежей выпечки и спешелти кофе в Иркутске от кофейни Tuttogusto. Быстрая доставка от 30 минут.',
-  keywords: ['кофейня Иркутск', 'доставка кофе', 'Туттогусто', 'выпечка Иркутск', 'завтраки Иркутск'],
+    'Онлайн-предзаказ вкуснейших блюд, свежей выпечки и спешелти кофе в кофейне Tuttogusto (Хрустальный парк). Оформляйте заказ заранее и забирайте без очереди!',
+  keywords: ['кофейня Иркутск', 'предзаказ кофе', 'Туттогусто', 'выпечка Иркутск', 'завтраки Хрустальный парк', 'кофе с собой Иркутск'],
+  openGraph: {
+    title: 'Кофейня Туттогусто | Быстрый онлайн-предзаказ без очереди в Иркутске',
+    description: 'Готовим свежие круассаны, спешелти кофе и сытные горячие блюда. Заказывайте онлайн и забирайте горячим к вашему приходу!',
+    url: baseUrl,
+    siteName: 'Туттогусто',
+    images: [
+      {
+        url: '/assets/menu/slider/slide-2.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Атмосфера Туттогусто',
+      },
+    ],
+    locale: 'ru_RU',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Кофейня Туттогусто | Быстрый онлайн-предзаказ',
+    description: 'Спешелти кофе, горячие блюда и свежие круассаны в Иркутске.',
+    images: ['/assets/menu/slider/slide-2.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ru" className={`${jakarta.variable} scroll-smooth`}>
       <body className="bg-[#1F1C19] text-stone-100 min-h-screen flex flex-col antialiased selection:bg-[#D4A373] selection:text-stone-950">
+        <SchemaOrg />
         <CartProvider>
           <Navbar />
           <CartDrawer />

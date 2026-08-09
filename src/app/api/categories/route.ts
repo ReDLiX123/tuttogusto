@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { categoryRepo } from '@/application/container';
 import { STATIC_CATEGORIES } from '@/domain/staticData';
 
-export const dynamic = 'force-static';
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {

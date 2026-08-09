@@ -88,9 +88,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product: rawProduct, o
         </div>
 
         {/* Content with 2-line title container height */}
-        <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
+        <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
           <div className="space-y-1.5">
-            <h3 className="min-h-[2.75rem] text-sm sm:text-base font-bold text-stone-100 group-hover:text-[#D4A373] transition-colors line-clamp-2 leading-tight flex items-center">
+            <h3 className="min-h-[2.5rem] sm:min-h-[2.75rem] text-sm sm:text-base font-bold text-stone-100 group-hover:text-[#D4A373] transition-colors line-clamp-2 leading-tight flex items-center">
               {product.title}
             </h3>
             <p className="h-9 text-xs text-stone-400 line-clamp-2 leading-relaxed font-normal overflow-hidden">
@@ -99,9 +99,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product: rawProduct, o
           </div>
 
           {/* Footer Price & Dynamic Add/Quantity Controller */}
-          <div className="flex items-center justify-between pt-3 border-t border-stone-800/80">
-            <div className="flex items-baseline gap-1.5">
-              <span className="text-lg font-black text-stone-100">{finalPrice} ₽</span>
+          <div className="flex items-center justify-between pt-3 border-t border-stone-800/80 gap-2">
+            <div className="flex items-baseline gap-1.5 shrink-0">
+              <span className="text-base sm:text-lg font-black text-stone-100">{finalPrice} ₽</span>
               {product.discount > 0 && (
                 <span className="text-xs text-stone-500 line-through font-medium">
                   {product.price} ₽

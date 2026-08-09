@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { productService } from '@/application/container';
 import { STATIC_PRODUCTS } from '@/domain/staticData';
 
-export const dynamic = 'force-static';
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: Request) {
   try {
