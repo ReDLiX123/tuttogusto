@@ -36,6 +36,13 @@ export const RecommendedCarousel: React.FC<RecommendedCarouselProps> = ({ produc
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  // Maximum valid index on desktop so that the last cards fill the right edge without black gaps
+  const visibleCardsCount = 3;
+  const maxIndex = useMemo(
+    () => Math.max(0, products.length - visibleCardsCount),
+    [products.length]
+  );
+
   // Smoothly animate x MotionValue whenever currentIndex changes on desktop
   useEffect(() => {
     if (!isMobile) {
@@ -51,7 +58,7 @@ export const RecommendedCarousel: React.FC<RecommendedCarouselProps> = ({ produc
     return products.map((p) => ProductFactory.create(p));
   }, [products]);
 
-  // Modulo step navigation handlers
+  // Modulo step navigation handlers clamped to maxIndex
   const next = () => {
     if (isClickLocked.current || products.length === 0) return;
     isClickLocked.current = true;
@@ -59,7 +66,7 @@ export const RecommendedCarousel: React.FC<RecommendedCarouselProps> = ({ produc
     if (isMobile && scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({ left: 280, behavior: 'smooth' });
     } else {
-      setCurrentIndex((prev) => (prev + 1) % products.length);
+      setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
     }
 
     setTimeout(() => {
@@ -74,7 +81,7 @@ export const RecommendedCarousel: React.FC<RecommendedCarouselProps> = ({ produc
     if (isMobile && scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({ left: -280, behavior: 'smooth' });
     } else {
-      setCurrentIndex((prev) => (prev - 1 + products.length) % products.length);
+      setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
     }
 
     setTimeout(() => {
@@ -164,7 +171,7 @@ export const RecommendedCarousel: React.FC<RecommendedCarouselProps> = ({ produc
           <motion.div
             style={{ x }}
             drag="x"
-            dragConstraints={{ left: -Math.max(0, (products.length - 3) * 308), right: 0 }}
+            dragConstraints={{ left: -maxIndex * 308, right: 0 }}
             dragElastic={0.05}
             onDragStart={() => {
               isDragging.current = true;
