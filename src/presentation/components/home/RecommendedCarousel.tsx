@@ -20,17 +20,12 @@ export const RecommendedCarousel: React.FC<RecommendedCarouselProps> = ({ produc
   const isDragging = useRef(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  // Repeat count for truly infinite desktop looping
-  const REPEAT_COUNT = 15;
-  const primaryRepeatIndex = Math.floor(REPEAT_COUNT / 2);
-  const initialOffset = useMemo(
-    () => (products.length > 0 ? primaryRepeatIndex * products.length : 0),
-    [products.length, primaryRepeatIndex]
-  );
-  const [currentIndex, setCurrentIndex] = useState(initialOffset);
+  // 1 original set + 1 duplicate repeat copy for seamless infinite looping without DOM clutter
+  const REPEAT_COUNT = 2;
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  // MotionValue for unified, buttery-smooth Framer Motion dragging & animations on desktop
-  const x = useMotionValue(-initialOffset * 308);
+  // MotionValue for unified, smooth Framer Motion dragging & animations on desktop
+  const x = useMotionValue(0);
 
   // Detect mobile viewport
   useEffect(() => {
@@ -57,21 +52,20 @@ export const RecommendedCarousel: React.FC<RecommendedCarouselProps> = ({ produc
     return products.map((p) => ProductFactory.create(p));
   }, [products]);
 
-  // Extended virtual items array for infinite looping
+  // Compact virtual items array (1 original + 1 duplicate with aria-hidden)
   const virtualProducts = useMemo(() => {
     if (products.length === 0) return [];
-    const list: { item: ProductProps; key: string; isDuplicate: boolean; index: number }[] = [];
-    let overallIndex = 0;
+    const list: { item: ProductProps; key: string; isDuplicate: boolean }[] = [];
     for (let r = 0; r < REPEAT_COUNT; r++) {
-      const isDuplicate = r !== primaryRepeatIndex;
+      const isDuplicate = r > 0;
       products.forEach((p, idx) => {
-        list.push({ item: p, key: `${p.id}-v${r}-${idx}`, isDuplicate, index: overallIndex++ });
+        list.push({ item: p, key: `${p.id}-v${r}-${idx}`, isDuplicate });
       });
     }
     return list;
-  }, [products, primaryRepeatIndex]);
+  }, [products]);
 
-  // Infinite step navigation handlers
+  // Modulo step navigation handlers
   const next = () => {
     if (isClickLocked.current || products.length === 0) return;
     isClickLocked.current = true;
@@ -79,13 +73,7 @@ export const RecommendedCarousel: React.FC<RecommendedCarouselProps> = ({ produc
     if (isMobile && scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({ left: 280, behavior: 'smooth' });
     } else {
-      setCurrentIndex((prev) => {
-        const nextIdx = prev + 1;
-        if (nextIdx >= (REPEAT_COUNT - 2) * products.length) {
-          return primaryRepeatIndex * products.length + (nextIdx % products.length);
-        }
-        return nextIdx;
-      });
+      setCurrentIndex((prev) => (prev + 1) % products.length);
     }
 
     setTimeout(() => {
@@ -100,14 +88,7 @@ export const RecommendedCarousel: React.FC<RecommendedCarouselProps> = ({ produc
     if (isMobile && scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({ left: -280, behavior: 'smooth' });
     } else {
-      setCurrentIndex((prev) => {
-        const prevIdx = prev - 1;
-        if (prevIdx < 2 * products.length) {
-          const mod = ((prevIdx % products.length) + products.length) % products.length;
-          return primaryRepeatIndex * products.length + mod;
-        }
-        return prevIdx;
-      });
+      setCurrentIndex((prev) => (prev - 1 + products.length) % products.length);
     }
 
     setTimeout(() => {
@@ -167,8 +148,8 @@ export const RecommendedCarousel: React.FC<RecommendedCarouselProps> = ({ produc
       </div>
 
       {/* 
-        Mobile View: Touch Snap Scroll Container (Cards take ~84vw on mobile with peek of next card)
-        Desktop View: Framer Motion motionValue track with smooth drag snapping
+        Mobile View: Render ONLY original products in touch snap container
+        Desktop View: Render 1 original + 1 duplicate (aria-hidden) set for smooth loop
       */}
       {isMobile ? (
         <div
@@ -210,7 +191,6 @@ export const RecommendedCarousel: React.FC<RecommendedCarouselProps> = ({ produc
               } else if (info.offset.x > threshold) {
                 prev();
               } else {
-                // Smooth snap back if drag wasn't past threshold
                 animate(x, -currentIndex * 308, {
                   duration: 0.25,
                   ease: [0.16, 1, 0.3, 1],
